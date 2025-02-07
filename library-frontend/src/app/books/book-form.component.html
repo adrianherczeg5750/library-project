@@ -1,0 +1,35 @@
+<h2 *ngIf="book.id">Könyv szerkesztése</h2>
+<h2 *ngIf="!book.id">Új könyv hozzáadása</h2>
+
+<form #bookForm="ngForm" (ngSubmit)="submitForm()" novalidate>
+
+  <label for="title">Cím:</label>
+  <input type="text" id="title" [(ngModel)]="book.title" name="title"
+         required maxlength="100" class="form-control"
+         #titleRef="ngModel">
+  <div *ngIf="titleRef.invalid && titleRef.touched" class="error">
+    <span *ngIf="titleRef.errors?.['required']">A cím megadása kötelező.</span>
+    <span *ngIf="titleRef.errors?.['maxlength']">A cím legfeljebb 100 karakter lehet.</span>
+  </div>
+
+  <label for="author">Szerző:</label>
+  <input type="text" id="author" [(ngModel)]="book.author" name="author"
+         required maxlength="100" class="form-control"
+         #authorRef="ngModel">
+  <div *ngIf="authorRef.invalid && authorRef.touched" class="error">
+    <span *ngIf="authorRef.errors?.['required']">A szerző megadása kötelező.</span>
+    <span *ngIf="authorRef.errors?.['maxlength']">A szerző neve legfeljebb 100 karakter lehet.</span>
+  </div>
+
+  <label for="quantity">Mennyiség:</label>
+  <input type="number" id="quantity" [(ngModel)]="book.quantity" name="quantity"
+         required min="1" class="form-control"
+         #quantityRef="ngModel">
+  <div *ngIf="quantityRef.invalid && quantityRef.touched" class="error">
+    <span *ngIf="quantityRef.errors?.['required']">A mennyiség megadása kötelező.</span>
+    <span *ngIf="quantityRef.errors?.['min']">A mennyiségnek legalább 1-nek kell lennie.</span>
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="bookForm.invalid">Mentés</button>
+  <button type="button" class="btn btn-secondary" (click)="cancel.emit()">Mégse</button>
+</form>

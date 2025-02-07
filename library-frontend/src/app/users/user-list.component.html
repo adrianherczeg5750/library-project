@@ -1,0 +1,32 @@
+<h2>Felhasználók</h2>
+
+<button (click)="selectedUser = { name: '', address: '' }" class="btn btn-primary">
+  Új felhasználó hozzáadása
+</button>
+
+<table>
+  <thead>
+  <tr>
+    <th>Név</th>
+    <th>Cím</th>
+    <th>Műveletek</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users">
+    <td>{{ user.name }}</td>
+    <td>{{ user.address }}</td>
+    <td>
+      <button (click)="selectUser(user)" class="btn btn-warning">Szerkesztés</button>
+      <button (click)="deleteUser(user.id!)" class="btn btn-danger">Törlés</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<app-user-form
+  *ngIf="selectedUser"
+  [user]="selectedUser"
+  (save)="selectedUser.id ? updateUser($event) : addUser($event)"
+  (cancel)="cancelEdit()">
+</app-user-form>

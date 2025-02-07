@@ -1,0 +1,26 @@
+<h2 *ngIf="user.id">Felhasználó szerkesztése</h2>
+<h2 *ngIf="!user.id">Új felhasználó hozzáadása</h2>
+
+<form #userForm="ngForm" (ngSubmit)="submitForm()" novalidate>
+
+  <label for="name">Név:</label>
+  <input type="text" id="name" [(ngModel)]="user.name" name="name"
+         required maxlength="50" class="form-control"
+         #nameRef="ngModel">
+  <div *ngIf="nameRef.invalid && nameRef.touched" class="error">
+    <span *ngIf="nameRef.errors?.['required']">A név megadása kötelező.</span>
+    <span *ngIf="nameRef.errors?.['maxlength']">A név legfeljebb 50 karakter lehet.</span>
+  </div>
+
+  <label for="address">Cím:</label>
+  <input type="text" id="address" [(ngModel)]="user.address" name="address"
+         required maxlength="100" class="form-control"
+         #addressRef="ngModel">
+  <div *ngIf="addressRef.invalid && addressRef.touched" class="error">
+    <span *ngIf="addressRef.errors?.['required']">A cím megadása kötelező.</span>
+    <span *ngIf="addressRef.errors?.['maxlength']">A cím legfeljebb 100 karakter lehet.</span>
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="userForm.invalid">Mentés</button>
+  <button type="button" class="btn btn-secondary" (click)="cancel.emit()">Mégse</button>
+</form>

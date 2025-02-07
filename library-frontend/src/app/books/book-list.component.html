@@ -1,0 +1,36 @@
+<h2>Könyvek listája</h2>
+
+<button (click)="selectedBook = { title: '', author: '', quantity: 0 }" class="btn btn-primary">
+  Új könyv hozzáadása
+</button>
+<div *ngIf="errorMessage" class="alert alert-danger mt-3">
+  {{ errorMessage }}
+</div>
+<table>
+  <thead>
+  <tr>
+    <th>Cím</th>
+    <th>Szerző</th>
+    <th>Mennyiség</th>
+    <th>Műveletek</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let book of books">
+    <td>{{ book.title }}</td>
+    <td>{{ book.author }}</td>
+    <td>{{ book.quantity }}</td>
+    <td>
+      <button (click)="selectBook(book)" class="btn btn-warning">Szerkesztés</button>
+      <button (click)="deleteBook(book.id!)" class="btn btn-danger">Törlés</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<app-book-form
+  *ngIf="selectedBook"
+  [book]="selectedBook"
+  (save)="selectedBook.id ? updateBook($event) : addBook($event)"
+  (cancel)="cancelEdit()">
+</app-book-form>

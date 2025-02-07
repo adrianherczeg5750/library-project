@@ -1,0 +1,38 @@
+<form (ngSubmit)="onSave()">
+  <div class="form-group">
+    <label for="book">Könyv</label>
+    <select id="book" [(ngModel)]="loan.book" name="book" required class="form-control" #bookRef="ngModel" (change)="validateQuantity()">
+      <option [ngValue]="null" disabled selected>Válassz egy könyvet</option>
+      <option *ngFor="let book of availableBooks" [ngValue]="book">{{ book.title }}</option>
+    </select>
+    <div *ngIf="bookRef.invalid && bookRef.touched" class="text-danger">
+      A könyv kiválasztása kötelező!
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="user">Felhasználó</label>
+    <select id="user" [(ngModel)]="loan.user" name="user" required class="form-control" #userRef="ngModel">
+      <option [ngValue]="null" disabled selected>Válassz egy felhasználót</option>
+      <option *ngFor="let user of availableUsers" [ngValue]="user">{{ user.name }}</option>
+    </select>
+    <div *ngIf="userRef.invalid && userRef.touched" class="text-danger">
+      A felhasználó kiválasztása kötelező!
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="quantity">Mennyiség</label>
+    <input type="number" id="quantity" [(ngModel)]="loan.quantity" name="quantity" required min="1" class="form-control" #quantityRef="ngModel" (input)="validateQuantity()">
+    <div *ngIf="quantityRef.invalid && quantityRef.touched" class="text-danger">
+      <span *ngIf="quantityRef.errors?.['required']">A mennyiség megadása kötelező.</span>
+      <span *ngIf="quantityRef.errors?.['min']">A mennyiségnek legalább 1-nek kell lennie.</span>
+    </div>
+    <div *ngIf="quantityError" class="text-danger">
+      A kiválasztott könyvből nincs elég példány elérhető!
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="quantityError || bookRef.invalid || userRef.invalid || quantityRef.invalid">Mentés</button>
+  <button type="button" class="btn btn-secondary" (click)="onCancel()">Mégse</button>
+</form>

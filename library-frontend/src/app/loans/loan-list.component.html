@@ -1,0 +1,39 @@
+<h2>Kölcsönzések</h2>
+
+<button class="btn btn-primary" *ngIf="availableBooks && availableBooks.length > 0" (click)="openLoanForm()">
+  Új kölcsönzés
+</button>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Könyv</th>
+    <th>Felhasználó</th>
+    <th>Mennyiség</th>
+    <th>Kivétel dátuma</th>
+    <th>Visszahozva</th>
+    <th>Műveletek</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let loan of loans">
+    <td>{{ loan.book?.title }}</td>
+    <td>{{ loan.user?.name }}</td>
+    <td>{{ loan.quantity }}</td>
+    <td>{{ loan.takenOutAt | date:'short' }}</td>
+    <td>{{ loan.broughtBackAt ? (loan.broughtBackAt | date:'short') : 'Nincs visszahozva' }}</td>
+    <td>
+      <button class="btn btn-warning" *ngIf="!loan.broughtBackAt" (click)="returnLoan(loan)">
+        Visszahozás
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<app-loan-form *ngIf="selectedLoan"
+               [loan]="selectedLoan"
+               (save)="addLoan($event)"
+               (cancel)="selectedLoan = null">
+</app-loan-form>
+

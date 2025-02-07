@@ -1,0 +1,45 @@
+form {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f9f9f9;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.btn-success {
+  background: #28a745;
+  color: white;
+}
+
+button.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
