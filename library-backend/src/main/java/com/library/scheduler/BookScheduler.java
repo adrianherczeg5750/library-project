@@ -6,6 +6,7 @@ import io.smallrye.common.annotation.Blocking;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.logging.Logger;
 
 @ApplicationScoped
 public class BookScheduler {
@@ -18,7 +19,7 @@ public class BookScheduler {
     }
 
     @Blocking
-    @Scheduled(cron = "0 0 20 ? * MON-FRI")
+    @Scheduled(cron = "0 48 13 ? * MON-FRI")
     public void scheduleBooks() {
         List<Future<Integer>> futures = new ArrayList<>();
 
@@ -26,6 +27,17 @@ public class BookScheduler {
             int bookCount = ThreadLocalRandom.current().nextInt(2000, 4001);
             BookImport task = new BookImport(bookCount, bookService);
             futures.add(executorService.submit(task));
+        }
+
+        for(Future<Integer> future : futures) {
+            try {
+                future.get();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
