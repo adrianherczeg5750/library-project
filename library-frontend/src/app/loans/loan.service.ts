@@ -20,10 +20,6 @@ export class LoanService {
     return this.http.post<Loan>(this.apiUrl, loan);
   }
 
-  updateLoan(loan: Loan): Observable<Loan> {
-    return this.http.put<Loan>(`${this.apiUrl}/${loan.id}`, loan);
-  }
-
   returnLoan(id: number): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}/return`, {});
   }

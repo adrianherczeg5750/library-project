@@ -27,18 +27,6 @@ public class BookResource {
         return bookRepository.listAll();
     }
 
-    @GET
-    @Path("/search")
-    public List<Book> searchBooks(@QueryParam("title") String title, @QueryParam("author") String author) {
-        if (title != null && !title.isEmpty()) {
-            return bookRepository.findByTitle(title);
-        } else if (author != null && !author.isEmpty()) {
-            return bookRepository.findByAuthor(author);
-        } else {
-            throw new BadRequestException("Adjon meg egy címet vagy szerzőt");
-        }
-    }
-
     @POST
     @Transactional
     public Response addBook(@Valid Book book) {

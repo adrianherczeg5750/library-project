@@ -28,16 +28,6 @@ public class UserResource {
         return userRepository.listAll();
     }
 
-    @GET
-    @Path("/search")
-    public List<User> searchUsers(@QueryParam("name") String name) {
-        if (name != null && !name.isEmpty()) {
-            return userRepository.findByName(name);
-        } else {
-            throw new BadRequestException("Adja meg a könyv nevét");
-        }
-    }
-
     @POST
     @Transactional
     public Response addUser(@Valid User user) {
